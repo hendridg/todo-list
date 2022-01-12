@@ -38,8 +38,16 @@ label {
 
 .title {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding: 1em 1em;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.title > p {
   margin: 0;
 }
 
@@ -61,7 +69,6 @@ label {
 .root {
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: flex-start;
   background-color: white;

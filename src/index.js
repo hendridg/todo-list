@@ -21,18 +21,11 @@ const arrayTasks = [
 
 function component() {
   const containerElement = document.createElement('div');
-  const titleElement = document.createElement('div');
-  const paragraphTitle = document.createElement('div');
-  const iconRefresh = document.createElement('div');
   const inputElement = document.createElement('input');
   const ulElement = document.createElement('ul');
   const btnClearTasks = document.createElement('button');
 
   containerElement.classList.add('container-todo');
-  titleElement.classList.add('title');
-  paragraphTitle.innerHTML = "Today's To Do";
-  iconRefresh.innerHTML = '<i class="fas fa-sync-alt"></i>';
-  titleElement.append(paragraphTitle, iconRefresh);
   inputElement.placeholder = 'Add to your list...';
   btnClearTasks.textContent = 'Clear all completed';
   btnClearTasks.classList.add('btn-clear-task');
@@ -43,7 +36,7 @@ function component() {
     return 'done';
   });
 
-  containerElement.append(titleElement, inputElement, ulElement, btnClearTasks);
+  containerElement.append(inputElement, ulElement, btnClearTasks);
 
   return containerElement;
 }
