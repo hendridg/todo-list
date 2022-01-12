@@ -11,7 +11,7 @@ module.exports = {
       template: './src/index.html',
     }),
   ],
-  mode: 'development',
+  mode: 'production',
   devServer: {
     static: './dist',
   },
