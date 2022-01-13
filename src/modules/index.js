@@ -18,7 +18,7 @@ const Tasks = class {
         index: 1,
       },
       {
-        description: 'fix car',
+        description: 'fix car in the morning',
         completed: false,
         index: 2,
       },
