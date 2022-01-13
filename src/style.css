@@ -6,6 +6,7 @@ body {
   align-items: center;
   color: #333;
   height: 100vh;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 input {
@@ -13,6 +14,7 @@ input {
   border: none;
   padding: 1em;
   font-size: 1em;
+  outline: none;
 }
 
 ul {
@@ -57,9 +59,11 @@ label {
 }
 
 .icon-menu-container {
+  display: flex;
+  align-items: center;
   padding: 0;
   width: min-content;
-  cursor: cell;
+  cursor: move;
 }
 
 .checkbox-container {
@@ -90,4 +94,32 @@ label {
   cursor: pointer;
   align-self: center;
   margin: 1em;
+}
+
+.text-input {
+  font-family: 'Times New Roman', Times, serif;
+  color: #333;
+  display: block;
+  border: none !important;
+  outline: none;
+  justify-self: baseline;
+  background: transparent;
+  box-shadow: none;
+  overflow: auto;
+  font-size: 1rem;
+  font-style: normal;
+  resize: none;
+  margin: 0;
+  margin-left: 0.5em;
+  padding: 0;
+  word-wrap: break-word;
+  width: 20rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.editing {
+  background-color: #fffedd;
 }

@@ -1,46 +1,48 @@
-import Task from './components/task.js';
+import Tasks from './modules/index.js';
 import './style.css';
 
-const arrayTasks = [
-  {
-    description: 'wash the dogs',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Complete To Do list project',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'fix car',
-    completed: false,
-    index: 2,
-  },
-];
+const inTsk = {};
+const objTasks = new Tasks();
 
-function component() {
-  const containerElement = document.createElement('div');
-  const inputElement = document.createElement('input');
-  const ulElement = document.createElement('ul');
-  const btnClearTasks = document.createElement('button');
-
-  containerElement.classList.add('container-todo');
-  inputElement.placeholder = 'Add to your list...';
-  btnClearTasks.textContent = 'Clear all completed';
-  btnClearTasks.classList.add('btn-clear-task');
-  btnClearTasks.disabled = true;
-
-  arrayTasks.map((task) => {
-    ulElement.appendChild(Task(task));
-    return 'done';
-  });
-
-  containerElement.append(inputElement, ulElement, btnClearTasks);
-
-  return containerElement;
+if (localStorage.savedTasks) {
+  objTasks.tasks = JSON.parse(localStorage.getItem('savedTasks'));
 }
 
+const btnClearTasks = document.createElement('button');
 const root = document.querySelector('.root');
+const ulElement = document.querySelector('.ul-element');
+const inputElement = document.querySelector('.input-element');
+btnClearTasks.innerHTML = 'Clear all completed';
+btnClearTasks.classList.add('btn-clear-task');
 
-root.appendChild(component());
+inputElement.addEventListener('change', () => {
+  inTsk.description = inputElement.value;
+  inTsk.completed = false;
+  inTsk.index = objTasks.tasks.length;
+  objTasks.addTask(new Tasks(inTsk.description, inTsk.completed, inTsk.index));
+});
+
+window.addEventListener('keyup', (e) => {
+  if (e.key === 'Enter') {
+    inputElement.value = '';
+  }
+});
+
+btnClearTasks.addEventListener('click', () => {
+  const result = objTasks.tasks.filter((task) => task.completed === false);
+  objTasks.tasks = result;
+  objTasks.populateFields();
+  ulElement.innerHTML = '';
+  root.innerHTML = `
+    <div class="title">
+      <p>Today's To Do</p><i class="fas fa-sync-alt"></i>
+    </div>
+    <div class="container-todo">
+      <ul class='ul-element'></ul>
+    </div>
+  `;
+  root.append(objTasks.displayTasks(), btnClearTasks);
+});
+
+objTasks.displayTasks();
+root.append(btnClearTasks);
