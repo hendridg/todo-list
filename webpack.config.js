@@ -10,13 +10,13 @@ module.exports = {
       template: './src/index.html',
     }),
   ],
-  mode: 'production',
+  mode: 'development',
   devServer: {
-    static: './dist',
+    static: './docs',
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
     clean: true,
   },
   module: {
