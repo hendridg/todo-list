@@ -1,5 +1,4 @@
 import Tasks from './index.js';
-import clearTasks from './clearTask.js';
 
 beforeAll(() => {
   document.body.innerHTML = `
@@ -95,7 +94,6 @@ describe('Checking Checkbox', () => {
   test('Checking a checkbox calls the checkedTask function', () => {
     const checked = document.querySelector('#check1');
     const clearMock = jest.spyOn(objTasks, 'completedTask');
-    // override the implementation
     clearMock.mockImplementation();
     checked.click();
     expect(objTasks.completedTask).toBeCalled();
@@ -108,17 +106,5 @@ describe('Checking Checkbox', () => {
     checkBox.checked = true;
     objTasks.completedTask(objTasks.tasks[3], checkBox, label);
     expect(objTasks.tasks[3].completed).toEqual(true);
-  });
-});
-
-describe('Clear Functionality', () => {
-  test('pressing clear button calls clearTasks ftn', () => {
-    const clear = document.querySelector('.btn-clear-task');
-    // clearTasks = jest.fn();
-    // override the implementation
-    const clearTaskMock = jest.fn(clearTasks);
-    clear.click();
-    expect(clearTaskMock).toBeCalled();
-    clearTaskMock.mockRestore();
   });
 });

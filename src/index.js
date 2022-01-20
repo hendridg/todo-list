@@ -13,8 +13,6 @@ const btnClearTasks = document.querySelector('.btn-clear-task');
 const root = document.querySelector('.root');
 const ulElement = document.querySelector('.ul-element');
 const inputElement = document.querySelector('.input-element');
-// btnClearTasks.innerHTML = 'Clear all completed';
-// btnClearTasks.classList.add('btn-clear-task');
 
 inputElement.addEventListener('change', () => {
   inTsk.description = inputElement.value;
@@ -30,7 +28,6 @@ window.addEventListener('keyup', (e) => {
 });
 
 btnClearTasks.addEventListener('click', () => {
-  console.log('Im here!');
   clearTasks(objTasks);
   ulElement.innerHTML = '';
   root.append(objTasks.displayTasks(), btnClearTasks);
@@ -38,4 +35,3 @@ btnClearTasks.addEventListener('click', () => {
 
 objTasks.displayTasks();
 root.append(btnClearTasks);
-// export { clearTasks as default };
