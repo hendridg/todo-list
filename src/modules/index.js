@@ -49,9 +49,8 @@ const Tasks = class {
     this.displayTasks();
   };
 
-  editTask = (e, task, label, icon) => {
-    task.description = e.target.value;
-    label.innerHTML = task.description;
+  editTask = (text, label, icon) => {
+    label.innerHTML = text;
     this.populateFields();
     icon.innerHTML = '<i class="fas fa-trash-alt"></i>';
     icon.style.cursor = 'pointer';
@@ -115,7 +114,8 @@ const Tasks = class {
       });
 
       textInput.addEventListener('change', (e) => {
-        this.editTask(e, task, label, icon);
+        task.description = e.target.value;
+        this.editTask(task.description, label, icon);
       });
 
       textInput.addEventListener('blur', () => {

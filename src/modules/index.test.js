@@ -78,3 +78,21 @@ describe('Test localStorage memory', () => {
     expect(Object.getOwnPropertyNames(localStorage)[6]).toBe('savedTasks');
   });
 });
+
+describe('Testing second part', () => {
+  test('Change text in task', () => {
+    const liElement = document.querySelectorAll('li');
+    const label = liElement[3].querySelector('label');
+    const icon = liElement[3].querySelector('.icon-menu-container');
+    objTasks.editTask('Edit task', label, icon);
+    expect(liElement[3].textContent).toEqual('Edit task');
+  });
+  test('Testing function complete', () => {
+    const liElement = document.querySelectorAll('li');
+    const checkBox = liElement[3].querySelector('input');
+    const label = liElement[3].querySelector('label');
+    checkBox.checked = true;
+    objTasks.completedTask(objTasks.tasks[3], checkBox, label);
+    expect(objTasks.tasks[3].completed).toEqual(true);
+  });
+});
