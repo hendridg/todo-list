@@ -1,4 +1,5 @@
 import Tasks from './modules/index.js';
+import clearTasks from './modules/clearTask.js';
 import './style.css';
 
 const inTsk = {};
@@ -29,20 +30,11 @@ window.addEventListener('keyup', (e) => {
 });
 
 btnClearTasks.addEventListener('click', () => {
-  const result = objTasks.tasks.filter((task) => task.completed === false);
-  objTasks.tasks = result;
-  objTasks.populateFields();
+  clearTasks(objTasks);
   ulElement.innerHTML = '';
-  root.innerHTML = `
-    <div class="title">
-      <p>Today's To Do</p><i class="fas fa-sync-alt"></i>
-    </div>
-    <div class="container-todo">
-      <ul class='ul-element'></ul>
-    </div>
-  `;
   root.append(objTasks.displayTasks(), btnClearTasks);
 });
 
 objTasks.displayTasks();
 root.append(btnClearTasks);
+export { clearTasks as default };

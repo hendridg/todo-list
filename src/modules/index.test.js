@@ -1,4 +1,5 @@
 import Tasks from './index.js';
+import clearTasks from './clearTask.js';
 
 beforeAll(() => {
   document.body.innerHTML = `
@@ -10,6 +11,7 @@ beforeAll(() => {
         <input class='input-element' placeholder="Add to your list..." />
         <ul class='ul-element'></ul>
     </div>
+    <button class="btn-clear-task">Clear all completed</button>
 </div>`;
 });
 const objTasks = new Tasks();
@@ -79,13 +81,25 @@ describe('Test localStorage memory', () => {
   });
 });
 
-describe('Testing second part', () => {
+describe('Modify Task', () => {
   test('Change text in task', () => {
     const liElement = document.querySelectorAll('li');
     const label = liElement[3].querySelector('label');
     const icon = liElement[3].querySelector('.icon-menu-container');
     objTasks.editTask('Edit task', label, icon);
     expect(liElement[3].textContent).toEqual('Edit task');
+  });
+});
+
+describe('Checking Checkbox', () => {
+  test('Checking a checkbox calls the checkedTask function', () => {
+    const checked = document.querySelector('#check1');
+    const clearMock = jest.spyOn(objTasks, 'completedTask');
+    // override the implementation
+    clearMock.mockImplementation();
+    checked.click();
+    expect(objTasks.completedTask).toBeCalled();
+    clearMock.mockRestore();
   });
   test('Testing function complete', () => {
     const liElement = document.querySelectorAll('li');
@@ -94,5 +108,17 @@ describe('Testing second part', () => {
     checkBox.checked = true;
     objTasks.completedTask(objTasks.tasks[3], checkBox, label);
     expect(objTasks.tasks[3].completed).toEqual(true);
+  });
+});
+
+describe('Clear Functionality', () => {
+  test('pressing clear button calls clearTasks ftn', () => {
+    const clear = document.querySelector('.btn-clear-task');
+    // clearTasks = jest.fn();
+    // override the implementation
+    const clearTaskMock = jest.fn(clearTasks);
+    clear.click();
+    expect(clearTaskMock).toBeCalled();
+    clearTaskMock.mockRestore();
   });
 });
