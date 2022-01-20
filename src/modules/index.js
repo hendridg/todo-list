@@ -1,8 +1,7 @@
-const containerElement = document.querySelector('.container-todo');
-const ulElement = document.querySelector('.ul-element');
+/* eslint-disable comma-dangle */
 
 const Tasks = class {
-  constructor(description, completed = false, index = 2) {
+  constructor(description, completed = false, index) {
     this.description = description;
     this.completed = completed;
     this.index = index;
@@ -35,18 +34,24 @@ const Tasks = class {
   };
 
   removeTask(task) {
-    const result = this.tasks.filter((b) => b !== task);
+    const result = this.tasks.filter((b) => b.index !== task.index);
     this.tasks = result;
     this.populateFields();
+    this.displayTasks();
   }
 
   addTask = (newTask) => {
+    if (newTask.description === '') {
+      return;
+    }
     this.tasks.push(newTask);
     this.populateFields();
     this.displayTasks();
   };
 
   displayTasks = () => {
+    const containerElement = document.querySelector('.container-todo');
+    const ulElement = document.querySelector('.ul-element');
     ulElement.innerHTML = '';
     this.tasks.map((task) => {
       const li = document.createElement('li');
@@ -59,6 +64,7 @@ const Tasks = class {
       const icon = document.createElement('div');
       textInput.classList.add('text-input', 'hidden');
       icon.classList.add('icon-menu-container');
+      li.classList.add(`li${task.index}`);
       itemTaskElement.classList.add('item-element');
       icon.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
       const iconMenu = '<i class="fas fa-ellipsis-v"></i>';
