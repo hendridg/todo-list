@@ -49,6 +49,26 @@ const Tasks = class {
     this.displayTasks();
   };
 
+  editTask = (e, task, label, icon) => {
+    task.description = e.target.value;
+    label.innerHTML = task.description;
+    this.populateFields();
+    icon.innerHTML = '<i class="fas fa-trash-alt"></i>';
+    icon.style.cursor = 'pointer';
+  };
+
+  completedTask = (task, checkBox, label) => {
+    if (checkBox.checked) {
+      label.style.textDecoration = 'line-through';
+      task.completed = checkBox.checked;
+      this.populateFields();
+    } else {
+      label.style.textDecoration = 'none';
+      task.completed = checkBox.checked;
+      this.populateFields();
+    }
+  };
+
   displayTasks = () => {
     const containerElement = document.querySelector('.container-todo');
     const ulElement = document.querySelector('.ul-element');
@@ -95,11 +115,7 @@ const Tasks = class {
       });
 
       textInput.addEventListener('change', (e) => {
-        task.description = e.target.value;
-        label.innerHTML = task.description;
-        this.populateFields();
-        icon.innerHTML = iconDelete;
-        icon.style.cursor = 'pointer';
+        this.editTask(e, task, label, icon);
       });
 
       textInput.addEventListener('blur', () => {
@@ -113,15 +129,7 @@ const Tasks = class {
       });
 
       checkBox.addEventListener('click', () => {
-        if (checkBox.checked) {
-          label.style.textDecoration = 'line-through';
-          task.completed = checkBox.checked;
-          this.populateFields();
-        } else {
-          label.style.textDecoration = 'none';
-          task.completed = checkBox.checked;
-          this.populateFields();
-        }
+        this.completedTask(task, checkBox, label);
       });
 
       icon.addEventListener('click', () => {
