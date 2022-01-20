@@ -1,4 +1,4 @@
-import Tasks, { dom } from './index.js';
+import Tasks from './index.js';
 
 beforeAll(() => {
   document.body.innerHTML = `
