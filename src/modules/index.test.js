@@ -10,6 +10,7 @@ beforeAll(() => {
         <input class='input-element' placeholder="Add to your list..." />
         <ul class='ul-element'></ul>
     </div>
+    <button class="btn-clear-task">Clear all completed</button>
 </div>`;
 });
 const objTasks = new Tasks();
@@ -76,5 +77,34 @@ describe('Test localStorage memory', () => {
   });
   test('"savedTasks" array should be saved in localStorage ', () => {
     expect(Object.getOwnPropertyNames(localStorage)[6]).toBe('savedTasks');
+  });
+});
+
+describe('Modify Task', () => {
+  test('Change text in task', () => {
+    const liElement = document.querySelectorAll('li');
+    const label = liElement[3].querySelector('label');
+    const icon = liElement[3].querySelector('.icon-menu-container');
+    objTasks.editTask('Edit task', label, icon);
+    expect(liElement[3].textContent).toEqual('Edit task');
+  });
+});
+
+describe('Checking Checkbox', () => {
+  test('Checking a checkbox calls the checkedTask function', () => {
+    const checked = document.querySelector('#check1');
+    const clearMock = jest.spyOn(objTasks, 'completedTask');
+    clearMock.mockImplementation();
+    checked.click();
+    expect(objTasks.completedTask).toBeCalled();
+    clearMock.mockRestore();
+  });
+  test('Testing function complete', () => {
+    const liElement = document.querySelectorAll('li');
+    const checkBox = liElement[3].querySelector('input');
+    const label = liElement[3].querySelector('label');
+    checkBox.checked = true;
+    objTasks.completedTask(objTasks.tasks[3], checkBox, label);
+    expect(objTasks.tasks[3].completed).toEqual(true);
   });
 });
