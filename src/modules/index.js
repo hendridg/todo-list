@@ -1,8 +1,25 @@
-const containerElement = document.querySelector('.container-todo');
-const ulElement = document.querySelector('.ul-element');
+/* eslint-disable comma-dangle */
+import { JSDOM } from 'jsdom';
+
+export const dom = new JSDOM(
+  `<body>
+<div class="root">
+    <div class="title">
+        <p>Today's To Do</p><i class="fas fa-sync-alt"></i>
+    </div>
+    <div class="container-todo">
+        <input class='input-element' placeholder="Add to your list..." />
+        <ul class='ul-element'></ul>
+    </div>
+</div>
+</body>`
+);
+
+const containerElement = dom.window.document.querySelector('.container-todo');
+const ulElement = dom.window.document.querySelector('.ul-element');
 
 const Tasks = class {
-  constructor(description, completed = false, index = 2) {
+  constructor(description, completed = false, index) {
     this.description = description;
     this.completed = completed;
     this.index = index;
@@ -35,9 +52,10 @@ const Tasks = class {
   };
 
   removeTask(task) {
-    const result = this.tasks.filter((b) => b !== task);
+    const result = this.tasks.filter((b) => b.index !== task.index);
     this.tasks = result;
     this.populateFields();
+    this.displayTasks();
   }
 
   addTask = (newTask) => {
@@ -49,16 +67,17 @@ const Tasks = class {
   displayTasks = () => {
     ulElement.innerHTML = '';
     this.tasks.map((task) => {
-      const li = document.createElement('li');
-      const itemTaskElement = document.createElement('div');
-      const checkBox = document.createElement('input');
-      const checkBoxContainer = document.createElement('div');
+      const li = dom.window.document.createElement('li');
+      const itemTaskElement = dom.window.document.createElement('div');
+      const checkBox = dom.window.document.createElement('input');
+      const checkBoxContainer = dom.window.document.createElement('div');
       checkBoxContainer.classList.add('checkbox-container');
-      const label = document.createElement('label');
-      const textInput = document.createElement('input');
-      const icon = document.createElement('div');
+      const label = dom.window.document.createElement('label');
+      const textInput = dom.window.document.createElement('input');
+      const icon = dom.window.document.createElement('div');
       textInput.classList.add('text-input', 'hidden');
       icon.classList.add('icon-menu-container');
+      li.classList.add(`li${task.index}`);
       itemTaskElement.classList.add('item-element');
       icon.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
       const iconMenu = '<i class="fas fa-ellipsis-v"></i>';
