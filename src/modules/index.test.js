@@ -1,24 +1,36 @@
 import Tasks, { dom } from './index.js';
 
+beforeAll(() => {
+  document.body.innerHTML = `
+  <div class="root">
+    <div class="title">
+        <p>Today's To Do</p><i class="fas fa-sync-alt"></i>
+    </div>
+    <div class="container-todo">
+        <input class='input-element' placeholder="Add to your list..." />
+        <ul class='ul-element'></ul>
+    </div>
+</div>`;
+});
 const objTasks = new Tasks();
 describe('Add and Delete task', () => {
-  test('Should be add a item', () => {
+  test('using addTask function adds an element to DOM with given description', () => {
     objTasks.addTask({
       description: 'Task from test 2',
       completed: false,
       index: 0,
     });
-    const liElement = dom.window.document.querySelectorAll('li');
+    const liElement = document.querySelectorAll('li');
     expect(liElement[3].textContent).toEqual('Task from test 2');
   });
-  test('Should be add a item', () => {
+  test('using addTask increases size of li array in DOM by 1', () => {
     objTasks.addTask({
       description: 'Task from test 3',
       completed: false,
       index: 0,
     });
-    const liElement = dom.window.document.querySelectorAll('li');
-    expect(liElement[4].textContent).toEqual('Task from test 3');
+    const liElement = document.querySelectorAll('li');
+    expect(liElement.length).toEqual(5);
   });
   test('Should be add a item', () => {
     objTasks.addTask({
@@ -26,11 +38,11 @@ describe('Add and Delete task', () => {
       completed: false,
       index: 0,
     });
-    const liElement = dom.window.document.querySelectorAll('li');
+    const liElement = document.querySelectorAll('li');
     expect(liElement[5].textContent).toEqual('Task from test 4');
   });
-  test('Should be delete a item', () => {
-    const ulElement = dom.window.document.querySelector('.ul-element');
+  test('using removeTask removes exactly 1 task from the DOM', () => {
+    const ulElement = document.querySelector('.ul-element');
     objTasks.removeTask({
       description: 'wash the dogs',
       completed: false,
@@ -39,9 +51,18 @@ describe('Add and Delete task', () => {
     expect(ulElement.childElementCount).toEqual(5);
   });
   test('Should be delete a item', () => {
-    const ulElement = dom.window.document.querySelector('.ul-element');
+    const ulElement = document.querySelector('.ul-element');
     objTasks.removeTask({
       description: 'Task from test 4',
+      completed: false,
+      index: 0,
+    });
+    expect(ulElement.childElementCount).toEqual(4);
+  });
+  test('Empty description does not add anything to DOM', () => {
+    const ulElement = document.querySelector('.ul-element');
+    objTasks.addTask({
+      description: '',
       completed: false,
       index: 0,
     });
